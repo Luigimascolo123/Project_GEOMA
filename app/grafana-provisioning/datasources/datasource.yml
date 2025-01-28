@@ -1,0 +1,19 @@
+apiVersion: 1
+deleteDatasources:
+  - name: MongoDB
+    orgId: 1
+
+datasources:
+  - name: MongoDB
+    type: yesoreyeram-infinity-datasource
+    uid: mongodb  # Aggiungi un UID fisso
+    access: proxy
+    isDefault: true
+    url: http://mongodb-api:3000
+    editable: true
+    jsonData:
+      global_queries: []
+    allowUiUpdates: true
+    provisioning:
+      mode: upsert
+    updateIntervalSeconds: 3600

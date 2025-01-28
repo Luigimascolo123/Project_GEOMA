@@ -1,0 +1,759 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "title": "Zoom 7 giorni",
+      "url": "/d/gdelt?from=now-7d&to=now",
+      "targetBlank": false
+    },
+    {
+      "title": "Zoom 15 giorni",
+      "url": "/d/gdelt?from=now-15d&to=now",
+      "targetBlank": false
+    },
+    {
+      "title": "Zoom 30 giorni",
+      "url": "/d/gdelt?from=now-30d&to=now",
+      "targetBlank": false
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "mongodb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "title": "Event Impact and Tone Analysis",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "mongodb"
+          },
+          "refId": "A",
+          "url": "http://mongodb-api:3000/daily_insights",
+          "parser": "json",
+          "format": "table",
+          "columns": [
+            {
+              "selector": "Date",
+              "text": "Time",
+              "type": "timestamp"
+            },
+            {
+              "selector": "AvgImpact",
+              "text": "Average Impact",
+              "type": "number"
+            },
+            {
+              "selector": "AvgTone",
+              "text": "Average Tone",
+              "type": "number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "mongodb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "title": "Trend Analysis",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "mongodb"
+          },
+          "refId": "A",
+          "url": "http://mongodb-api:3000/trend_analysis",
+          "parser": "json",
+          "format": "table",
+          "columns": [
+            {
+              "selector": "Date",
+              "text": "Time",
+              "type": "timestamp"
+            },
+            {
+              "selector": "NumMentions",
+              "text": "Number of Mentions",
+              "type": "number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "mongodb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Event Code"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Event Code"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Source URL"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Source URL"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": true,
+              "style": {
+                "color": {
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.4,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "field": "Number of Mentions",
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                }
+              }
+            },
+            "location": {
+              "mode": "auto"
+            },
+            "name": "Layer 1",
+            "type": "markers",
+            "tooltip": {
+              "mode": "all",
+              "showAll": true
+            }
+          }
+        ],
+        "tooltip": {
+          "mode": "all",
+          "showAll": true
+        },
+        "view": {
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
+        }
+      },
+      "title": "Geographic Distribution",
+      "type": "geomap",
+      "targets": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "mongodb"
+          },
+          "refId": "A",
+          "url": "http://mongodb-api:3000/geo_analysis?from=${__from:date:iso}&to=${__to:date:iso}",
+          "parser": "json",
+          "format": "table",
+          "columns": [
+            {
+              "selector": "ActionGeo_Lat",
+              "text": "Latitude",
+              "type": "number"
+            },
+            {
+              "selector": "ActionGeo_Long",
+              "text": "Longitude",
+              "type": "number"
+            },
+            {
+              "selector": "NumMentions",
+              "text": "Number of Mentions",
+              "type": "number"
+            },
+            {
+              "selector": "EventCode",
+              "text": "Event Code",
+              "type": "string"
+            },
+            {
+              "selector": "SOURCEURL",
+              "text": "Source URL",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "mongodb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "title": "Social Media Engagement Over Time",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "mongodb"
+          },
+          "refId": "A",
+          "url": "http://mongodb-api:3000/social_temporal_metrics",
+          "parser": "json",
+          "format": "table",
+          "columns": [
+            {
+              "selector": "date",
+              "text": "Date",
+              "type": "timestamp"
+            },
+            {
+              "selector": "metrics.engagement",
+              "text": "Total Engagement",
+              "type": "number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "mongodb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bar",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+  "title": "Top 10 Authors by Engagement",
+  "type": "table",
+  "targets": [
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "mongodb"
+      },
+      "refId": "A",
+      "url": "http://mongodb-api:3000/top_authors_engagement?from=${__from:date:iso}&to=${__to:date:iso}",
+      "parser": "json",
+      "format": "table",
+      "columns": [
+        {
+          "selector": "author",
+          "text": "Author",
+          "type": "string"
+        },
+        {
+          "selector": "engagement",
+          "text": "Total Engagement",
+          "type": "number"
+        }
+      ]
+    }
+  ]
+  },
+  {
+    "datasource": {
+      "type": "yesoreyeram-infinity-datasource",
+      "uid": "mongodb"
+    },
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "Percentage of Engagement",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "drawStyle": "bars",
+          "fillOpacity": 85,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "lineWidth": 1,
+          "scaleDistribution": {
+            "type": "linear"
+          }
+        },
+        "min": 0,
+        "max": 100,
+        "unit": "percent",
+        "decimals": 1
+      }
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 0,
+      "y": 20
+    },
+    "id": 4,
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "mode": "multi",
+        "sort": "desc"
+      }
+    },
+    "targets": [
+      {
+        "url": "http://mongodb-api:3000/platform_engagement_distribution?from=${__from:date:iso}&to=${__to:date:iso}",
+        "columns": [
+          {
+            "selector": "platform",
+            "text": "Platform",
+            "type": "string"
+          },
+          {
+            "selector": "likes_percentage",
+            "text": "Likes %",
+            "type": "number"
+          },
+          {
+            "selector": "shares_percentage",
+            "text": "Shares %",
+            "type": "number"
+          },
+          {
+            "selector": "comments_percentage",
+            "text": "Comments %",
+            "type": "number"
+          }
+        ]
+      }
+    ],
+    "title": "Engagement Distribution by Platform",
+    "type": "barchart"
+  },
+  {
+    "datasource": {
+      "type": "yesoreyeram-infinity-datasource",
+      "uid": "mongodb"
+    },
+    "fieldConfig": {
+      "defaults": {
+        "custom": {
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "axisBorderShow": true,
+          "axisGridShow": true,
+          "axisLabelShow": true,
+          "axisSoftMin": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mentions"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "GDELT Mentions"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "engagement"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "Social Engagement"
+              }
+            ]
+          }
+        ],
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        }
+      }
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 12,
+      "y": 20
+    },
+    "id": 7,
+    "options": {
+      "seriesMapping": "auto",
+      "legend": {
+        "showLegend": true,
+        "placement": "bottom"
+      },
+      "tooltip": {
+        "mode": "single",
+        "sort": "none"
+      },
+      "series": [
+        {
+          "pointSize": 5,
+          "show": "points",
+          "label" : "Correlation"
+        }
+      ],
+      "xField": "mentions",
+      "yField": "engagement"
+    },
+    "targets": [
+      {
+        "url": "http://mongodb-api:3000/gdelt_social_correlation?from=${__from:date:iso}&to=${__to:date:iso}",
+        "columns": [
+          {
+            "selector": "mentions",
+            "text": "GDELT Mentions",
+            "type": "number"
+          },
+          {
+            "selector": "engagement",
+            "text": "Social Engagement",
+            "type": "number"
+          },
+          {
+            "selector": "Date",
+            "text": "Date",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "title": " Number of Mentions vs Social Engagement",
+    "type": "xychart"
+  }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "$__from",
+    "to": "$__to"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "GDELT - Openmeasures Analysis Dashboard",
+  "uid": "gdelt",
+  "version": 1,
+  "weekStart": ""
+}

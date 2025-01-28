@@ -1,0 +1,7 @@
+pyspark==3.4.0
+pymongo
+requests
+hdfs
+pandas
+urllib3
+spacy

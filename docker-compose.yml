@@ -1,0 +1,155 @@
+version: '3'
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    hostname: namenode
+    environment:
+      - CLUSTER_NAME=hadoop-cluster
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check=false
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9870"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - gdelt_network
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    hostname: datanode
+    depends_on:
+      - namenode
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - SERVICE_PRECONDITION=namenode:9870
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    networks:
+      - gdelt_network
+
+  spark-master:
+    image: bitnami/spark:3.4
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    networks:
+      - gdelt_network
+
+  spark-worker:
+    image: bitnami/spark:3.4
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    networks:
+      - gdelt_network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - gdelt_network
+
+  mongodb-api:
+    build:
+      context: ./mongodb-api
+    container_name: mongodb-api
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    networks:
+      - gdelt_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    volumes:
+      - ./app/grafana-provisioning:/etc/grafana/provisioning
+    ports:
+      - "3001:3000" 
+    depends_on:
+      - mongodb-api
+    networks:
+      - gdelt_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  gdelt-processor:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: gdelt-processor
+    depends_on:
+      - namenode
+      - spark-master
+      - mongodb
+    volumes:
+      - ./app:/app
+    environment:
+      - HDFS_HOST=namenode
+      - HDFS_PORT=9870
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_DRIVER_MEMORY=4g
+      - SPARK_EXECUTOR_MEMORY=4g
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "10"
+    networks:
+      - gdelt_network
+
+networks:
+  gdelt_network:
+    driver: bridge
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  mongodb_data:
