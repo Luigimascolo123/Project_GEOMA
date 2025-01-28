@@ -39,7 +39,7 @@ The system is structured into several main components:
 - MongoDB
 - Grafana
 - Docker
-- Python 3.x
+- Python 
 - HDFS
 
 ## Setup
