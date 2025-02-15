@@ -32,7 +32,7 @@ class OpenmeasuresDownloader:
     
     # Download file da Openmeasures
     def download_openmeasures_file(self, social, start_date, finish_date, search_term="*"):
-        jwt_token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InBjaDVnZnBVRE9MYmg4OWtELUNOZSJ9.eyJpc3MiOiJodHRwczovL2xvZ2luLnNtYXQtYXBwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NmU4MjFlODUyYzQ1NDQ5N2M3OTZkMzIiLCJhdWQiOlsiaHR0cDovL2dvb2dsZV9hcGkiLCJodHRwczovL3Byai1iLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE3MzYzNTE4ODcsImV4cCI6MTczODk0Mzg4Nywic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCBxdWVyeTpwcm9fYXBpIHF1ZXJ5OmdyYXBocWwgYWNjZXNzOmNyYXdsX3JlcXVlc3RzIGFjY2VzczptZWRpYSBhY2Nlc3M6a2liYW5hIGFjY2Vzczpwcml2YXRldWkgb2ZmbGluZV9hY2Nlc3MiLCJhenAiOiJHb292aDhCTjQwV2RYRzMwQmtaZWJIMkhVWjNsZTJlNSIsInBlcm1pc3Npb25zIjpbImFjY2VzczpjcmF3bF9yZXF1ZXN0cyIsImFjY2VzczpraWJhbmEiLCJhY2Nlc3M6bWVkaWEiLCJhY2Nlc3M6cHJpdmF0ZXVpIiwicXVlcnk6Z3JhcGhxbCIsInF1ZXJ5OnByb19hcGkiXX0.pcWXZAO98xp-BH_kUjajrTnfsFZWhqgszovqujhnNOyiebve9PHfWAOdnhUU_9TgrxS5ZFHUXuTJJhWcnM8NqdlASm7atbvsp-OSYSdCB10AIIutSF6vZBlG1KGa406HGGiaMU9lPNQO788IAAbv0nJfW82vt7cHbDXYxVm9kqgzfsVUUCCgNYHMJLfhsEtfSItIJDge7NrtQDTznZVHIaVdLcwpx4IwfWdnJ8JkTdA2NGRp9RFATs77MhyVyFwJ2XBll2t0H2b8UdZ-7tmm_XLkxNzAJginW4USDwUWPjxUtsJ5zKhWo86s36ZqOfXO-lNFXBL3g_oIsBauRI5W-w'
+        jwt_token = '<JWT_TOKEN>'
         pro_api_host_url = 'https://api.openmeasures.io'
         
         json_name = f"{social}_{start_date.strftime('%Y%m%d')}_{finish_date.strftime('%Y%m%d')}.json"
